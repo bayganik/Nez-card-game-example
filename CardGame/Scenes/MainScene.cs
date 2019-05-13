@@ -20,7 +20,7 @@ namespace CardGame.Scenes
     public class MainScene : BaseScene
     {
         /*
-         * Example card game scene.  This is a soliture game.  It teaches:
+         * Example card game scene.  This is a solitaire game.  It teaches:
          *      Creation of entities on screen
          *      Assign entity "Tag" a value to distiguish them
          *      Creation of systems for particular entities (using components)
