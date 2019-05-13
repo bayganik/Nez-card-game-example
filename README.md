@@ -1,5 +1,5 @@
 # Nez ECS Framework Sample
-This is a simple soliture card game to show how to use NEZ frame work. This ECS Framework specifically made for C# and Monogame.
+This is a simple solitaire card game to show how to use NEZ frame work. This ECS Framework specifically made for C# and Monogame.
 https://github.com/prime31/Nez
 
 I like separation concerns when using ECS. So I choose to update my components using a System.  You will find most examples of NEZ
