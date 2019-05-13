@@ -1,0 +1,5 @@
+Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
+"C:/DevApps/Nez/Nez-Samples/_CardGame/CardGame/Content/Arial.spritefont","C:/DevApps/Nez/Nez-Samples/_CardGame/CardGame/Content/bin/DesktopGL/Arial.xnb","FontDescriptionProcessor","SpriteFontContent",2008,21521,0.232928
+"C:/DevApps/Nez/Nez-Samples/_CardGame/CardGame/Content/CardDeck_72x100.png","C:/DevApps/Nez/Nez-Samples/_CardGame/CardGame/Content/bin/DesktopGL/CardDeck_72x100.xnb","TextureProcessor","Texture2DContent",183534,1872085,0.0506302
+"C:/DevApps/Nez/Nez-Samples/_CardGame/CardGame/Content/EmptyHolder.png","C:/DevApps/Nez/Nez-Samples/_CardGame/CardGame/Content/bin/DesktopGL/EmptyHolder.xnb","TextureProcessor","Texture2DContent",409,28885,0.0069817
+"C:/DevApps/Nez/Nez-Samples/_CardGame/CardGame/Content/hand1.png","C:/DevApps/Nez/Nez-Samples/_CardGame/CardGame/Content/bin/DesktopGL/hand1.xnb","TextureProcessor","Texture2DContent",1778,12885,0.0009978
