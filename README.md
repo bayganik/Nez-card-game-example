@@ -1,6 +1,9 @@
 # Nez ECS Framework Sample
-This is a simple soliture card game to show how to use NEZ frame work. This ECS Framework specifically made for C# and Monogame.
+This is a simple solitaire card game to show how to use Nez frame work. This ECS Framework specifically made for C# and Monogame.
 https://github.com/prime31/Nez
+
+Nez emulates Unity 3d in using game components.  I worked with Monogame, then went to Unity, and now came back to Nez because I like the simplicity of working with Nez on 2D
+games.
 
 I like separation concerns when using ECS. So I choose to update my components using a System.  You will find most examples of NEZ
 to be using updates inside Components.  I don't like that.  NEZ is flexible enough to allow you to choose which way to go !!
