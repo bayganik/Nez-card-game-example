@@ -6,8 +6,8 @@ https://github.com/prime31/Nez
 
 I worked with Monogame, then went to Unity, and now came back to Monogame using Nez because I like the simplicity of working with Nez on 2D games.  This is a powerful 2D game engine.
 
-I like separation of concerns when using ECS. So I choose to update my components using a System.  You will find most examples of NEZ
-to be using updates inside Components.  I don't like that.  NEZ is flexible enough to allow you to choose which way to go !!
+ECS is used to allow for separation of concern when coding. For example, I choose to update my components using a separate "System".  
+However, You will find most examples of NEZ to be using updates inside "Components".  I don't like that.  NEZ is flexible enough to allow you to choose which way to go !!
 
 Game uses UI Canvas to put 2 button and a label on screen.
 
