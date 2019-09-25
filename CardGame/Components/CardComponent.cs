@@ -19,8 +19,8 @@ namespace CardGame.Components
         // The ranking depends on the card image that holds the faces of the cards
         // in our case images start with cardindex = 0 = 2 of hearts
         //
-        public Subtexture CardFace;
-        public Subtexture CardBack;
+        public Sprite CardFace;
+        public Sprite CardBack;
 
         public int Index;                   // 0 - 51 e.g. cardfaces[faceIndex];
         public int FaceImage = 0;           // 0 two,.. 8 ten, 9 jack, 10 queen, 11 king, 12 Ace
@@ -40,9 +40,9 @@ namespace CardGame.Components
         {
 
         }
-        public override void onAddedToEntity()
+        public override void OnAddedToEntity()
         {
-            base.onAddedToEntity();
+            base.OnAddedToEntity();
 
 
         }

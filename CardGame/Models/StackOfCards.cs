@@ -29,11 +29,11 @@ namespace CardGame.Models
             //
             // Stack entity holding cards
             //
-            Tag = _cardStack.tag;
+            Tag = _cardStack.Tag;
             StackComp = new StackComponent();
             LastCardonStack = new Entity();
 
-            StackComp = _cardStack.getComponent<StackComponent>();
+            StackComp = _cardStack.GetComponent<StackComponent>();
             if (StackComp == null)
                 return;
 

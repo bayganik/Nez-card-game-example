@@ -4,10 +4,10 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/DevApps/Nez/Nez-Samples/_CardGame/CardGame/Content/Arial.spritefont</File>
-    <File>C:/DevApps/Nez/Nez-Samples/_CardGame/CardGame/Content/CardDeck_72x100.png</File>
-    <File>C:/DevApps/Nez/Nez-Samples/_CardGame/CardGame/Content/EmptyHolder.png</File>
-    <File>C:/DevApps/Nez/Nez-Samples/_CardGame/CardGame/Content/hand1.png</File>
+    <File>C:/DevApps/Nez/Nez-Samples/_CardGame/NEZ-card-game-example/CardGame/Content/Arial.spritefont</File>
+    <File>C:/DevApps/Nez/Nez-Samples/_CardGame/NEZ-card-game-example/CardGame/Content/CardDeck_72x100.png</File>
+    <File>C:/DevApps/Nez/Nez-Samples/_CardGame/NEZ-card-game-example/CardGame/Content/EmptyHolder.png</File>
+    <File>C:/DevApps/Nez/Nez-Samples/_CardGame/NEZ-card-game-example/CardGame/Content/hand1.png</File>
   </SourceFiles>
   <DestFiles>
     <File xsi:nil="true" />

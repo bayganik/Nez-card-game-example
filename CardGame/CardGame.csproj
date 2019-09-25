@@ -67,11 +67,9 @@
     <Reference Include="MonoGame.Framework">
       <HintPath>$(MonoGameInstallDirectory)\MonoGame\v3.0\Assemblies\DesktopGL\MonoGame.Framework.dll</HintPath>
     </Reference>
-    <Reference Include="Nez">
-      <HintPath>..\..\..\Nez\Nez.Portable\bin\Debug\Nez.dll</HintPath>
-    </Reference>
-    <Reference Include="Nez.ImGui">
-      <HintPath>..\..\..\Nez\Nez.ImGui\bin\Debug\Nez.ImGui.dll</HintPath>
+    <Reference Include="Nez, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Nez-master\Nez.Portable\bin\Debug\Nez.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />

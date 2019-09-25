@@ -24,25 +24,25 @@ namespace CardGame.Systems
         public StackDragDispSystem(Matcher matcher) : base(matcher)
         {
         }
-        public override void process(Entity entity)
+        public override void Process(Entity entity)
         {
             //
             // We have a DragDisp entity (holds all cards entities)
             //
-            StackComponent sc = entity.getComponent<StackComponent>();
+            StackComponent sc = entity.GetComponent<StackComponent>();
             if (sc != null)
             {
                 if (sc.CardsInStack.Count <= 0)
                     return;                         //no cards to drag
             }
 
-            var _mouseCollider = entity.getComponent<BoxCollider>();
+            var _mouseCollider = entity.GetComponent<BoxCollider>();
             PrevMouse = CurrentMouse;
             CurrentMouse = Mouse.GetState();
             //
             // Current location of the mouse used for the hand icon
             //
-            entity.transform.position = scene.camera.screenToWorldPoint(new Vector2(CurrentMouse.Position.X, CurrentMouse.Position.Y));
+            entity.Transform.Position = Scene.Camera.ScreenToWorldPoint(new Vector2(CurrentMouse.Position.X, CurrentMouse.Position.Y));
 
             Entity lastCardonStack = sc.CardsInStack.LastOrDefault();
             //
@@ -75,18 +75,18 @@ namespace CardGame.Systems
             for (int i=0; i < sc.CardsInStack.Count; i++)
             {
                 Entity cardEntity = sc.CardsInStack[i];
-                cardEntity.enabled = true;
-                cardEntity.transform.position = entity.transform.position + fanOutDistannce * ind ;
+                cardEntity.Enabled = true;
+                cardEntity.Transform.Position = entity.Transform.Position + fanOutDistannce * ind ;
                 //
                 // Get the sprite (face/back)
                 //
-                var cardComp = cardEntity.getComponent<CardComponent>();          //cardcomponent has the data
-                var renderComp = cardEntity.getComponent<Sprite>();               //sprite renderer of the card
+                var cardComp = cardEntity.GetComponent<CardComponent>();          //cardcomponent has the data
+                var renderComp = cardEntity.GetComponent<SpriteRenderer>();               //sprite renderer of the card
                 //
                 // -100 because we want to render dragging cards on top of all ohters
                 //
-                renderComp.renderLayer = (ind * -1) - 1000 ;
-                renderComp.subtexture = cardComp.CardFace;          //we only drag face up cards
+                renderComp.RenderLayer = (ind * -1) - 1000 ;
+                renderComp.Sprite = cardComp.CardFace;          //we only drag face up cards
 
                 ind += 1;
             }

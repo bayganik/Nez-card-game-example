@@ -22,12 +22,12 @@ namespace CardGame.Systems
         public EndOfGameSystem(Matcher matcher) : base(matcher)
         {
         }
-        public override void process(Entity entity)
+        public override void Process(Entity entity)
         {
             //
             // TextEntity comes here
             //
-            MainGameScene = entity.scene as MainScene;              //hand entity belongs to MainScene
+            MainGameScene = entity.Scene as MainScene;              //hand entity belongs to MainScene
             MainGameScene.DispGameScore();
 
             if (MainGameScene.EndOfGameTest())

@@ -25,39 +25,39 @@ namespace CardGame.Systems
         {
 
         }
-        public override void process(Entity entity)
+        public override void Process(Entity entity)
         {
             //
             // ONLY MOUSE entity comes here
             //
-            MainGameScene = entity.scene as MainScene;              //hand entity belongs to MainScene
+            MainGameScene = entity.Scene as MainScene;              //hand entity belongs to MainScene
             //
             // Hand image is the entity that comes here
             //
-            var _mouseCollider = entity.getComponent<BoxCollider>();
+            var _mouseCollider = entity.GetComponent<BoxCollider>();
             PrevMouse = CurrentMouse;
             CurrentMouse = Mouse.GetState();
             //
             // Current location of the mouse used for the hand icon
             //
-            entity.transform.position = scene.camera.screenToWorldPoint(new Vector2(CurrentMouse.Position.X, CurrentMouse.Position.Y));
+            entity.Transform.Position = Scene.Camera.ScreenToWorldPoint(new Vector2(CurrentMouse.Position.X, CurrentMouse.Position.Y));
             MousePos = new Vector2(CurrentMouse.Position.X, CurrentMouse.Position.Y);
 
-            if (Input.leftMouseButtonReleased)
+            if (Input.LeftMouseButtonReleased)
             {
                 if (Dragging)
                 {
                     Dragging = false;
-                    if (!_mouseCollider.collidesWithAny(out CollisionResult collisionResult))
+                    if (!_mouseCollider.CollidesWithAny(out CollisionResult collisionResult))
                         return;
 
-                    Entity collidedEntity = collisionResult.collider.entity;
+                    Entity collidedEntity = collisionResult.Collider.Entity;
 
                     //
                     // Dealt Card is released but was not put on a stack
                     //
 
-                    if (collidedEntity.tag == 80)
+                    if (collidedEntity.Tag == 80)
                     {
                         //
                         // Ace pile drop
@@ -65,7 +65,7 @@ namespace CardGame.Systems
                         MainGameScene.DropCardFromDrag2AceStat(collidedEntity);
                         return;                     //ace pile stack
                     }
-                    if ((collidedEntity.tag >= 1) && (collidedEntity.tag <= 7))
+                    if ((collidedEntity.Tag >= 1) && (collidedEntity.Tag <= 7))
                     {
                         //
                         // Play pile drop
@@ -86,25 +86,25 @@ namespace CardGame.Systems
                     //
                 }
             }
-            if (Input.leftMouseButtonPressed)
+            if (Input.LeftMouseButtonPressed)
             {
                 if (CardDeckManager.endOfGame)
                     return;
 
-                if (!_mouseCollider.collidesWithAny(out CollisionResult collisionResult))
+                if (!_mouseCollider.CollidesWithAny(out CollisionResult collisionResult))
                     return;                                             //clicking on entities that have no colliders
                 //
                 // We have clicked on a box collider
                 //
 
-                Entity collidedEntity = collisionResult.collider.entity;
+                Entity collidedEntity = collisionResult.Collider.Entity;
                 //
                 // Stacks with tag=90 dealer pile displayed
                 // Stacks with tag=80 are Ace piles or Disp deal card
                 // Stacks with tag=70 dealer pile not displayed
                 // Stacks with tags 1 - 7 are play stacks
                 //
-                if (collidedEntity.tag == 80)
+                if (collidedEntity.Tag == 80)
                 {
                     //
                     // Ace pile
@@ -114,7 +114,7 @@ namespace CardGame.Systems
 
                     return;
                 }
-                if (collidedEntity.tag == 90)
+                if (collidedEntity.Tag == 90)
                 {
                     //
                     // Dealer stack with displayed cards
@@ -124,7 +124,7 @@ namespace CardGame.Systems
 
                     return;
                 }
-                if ((collidedEntity.tag >= 1) && (collidedEntity.tag <= 7))
+                if ((collidedEntity.Tag >= 1) && (collidedEntity.Tag <= 7))
                 {
                     //
                     // Play stacks 
@@ -135,7 +135,7 @@ namespace CardGame.Systems
                     //
                     // We have clicked on a Card/Cards that are going to be dragged
                     //
-                    CardComponent isCard = cardEntity.getComponent<CardComponent>();
+                    CardComponent isCard = cardEntity.GetComponent<CardComponent>();
                     if (isCard != null)
                     {
                         //

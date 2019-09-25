@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/DevApps/Nez/Nez-Samples/_CardGame/CardGame/Content/Arial.spritefont</SourceFile>
+  <SourceFile>C:/DevApps/Nez/Nez-Samples/_CardGame/NEZ-card-game-example/CardGame/Content/Arial.spritefont</SourceFile>
   <SourceTime>2019-05-10T10:07:38.1281578-04:00</SourceTime>
-  <DestFile>C:/DevApps/Nez/Nez-Samples/_CardGame/CardGame/Content/bin/DesktopGL/Content/Arial.xnb</DestFile>
-  <DestTime>2019-05-10T10:09:39.7827166-04:00</DestTime>
+  <DestFile>C:/DevApps/Nez/Nez-Samples/_CardGame/NEZ-card-game-example/CardGame/Content/bin/DesktopGL/Content/Arial.xnb</DestFile>
+  <DestTime>2019-05-20T10:16:37.134329-04:00</DestTime>
   <Importer>FontDescriptionImporter</Importer>
   <ImporterTime>2018-12-08T11:35:54-05:00</ImporterTime>
   <Processor>FontDescriptionProcessor</Processor>

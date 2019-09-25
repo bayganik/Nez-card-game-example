@@ -21,7 +21,7 @@ namespace CardGame
     public class CardDeckManager
     {
         static object syncRoot = new System.Object();       //object for locking
-        static CardDeckManager _instance;
+        static CardDeckManager _Instance;
 
         //
         // One deck of cards
@@ -54,37 +54,37 @@ namespace CardGame
         // Pre-load this array in Editor by dragging Asset\Images\CardDeck_72100
         // cards 0-51
         //
-        static Sprite[] cardfaces;
-        static Sprite[] cardBacks;
+        static SpriteRenderer[] cardfaces;
+        static SpriteRenderer[] cardBacks;
         //
         // Joker is card 56
         //
-        static Sprite cardJokers;
+        static SpriteRenderer cardJokers;
         public static void InitAllCards(Texture2D _cardImage)
         {
             //
             // card image has 5 rows of 13 cards
             //
-            List<Subtexture> subtexture = Subtexture.subtexturesFromAtlas(_cardImage, 72, 100);
+            List<Sprite> subtexture = Sprite.SpritesFromAtlas(_cardImage, 72, 100);
 
-            cardfaces = new Sprite[52];
+            cardfaces = new SpriteRenderer[52];
             for (int i = 0; i < 52; i++)
             {
-                cardfaces[i] = new Sprite(subtexture[i]);
+                cardfaces[i] = new SpriteRenderer(subtexture[i]);
             }
             //
             // back of cards 52-63 
             //
-            cardBacks = new Sprite[12];
+            cardBacks = new SpriteRenderer[12];
             for (int i = 0; i < 12; i++)
             {
-                cardBacks[i] = new Sprite(subtexture[i+52]);
+                cardBacks[i] = new SpriteRenderer(subtexture[i+52]);
             }
             //
             // Joker is card 64
             //
-            cardJokers = new Sprite();
-            cardJokers = new Sprite(subtexture[64]);
+            cardJokers = new SpriteRenderer();
+            cardJokers = new SpriteRenderer(subtexture[64]);
 
             currentCardBack = 6;
             currentCardNumber = 0;
@@ -106,8 +106,8 @@ namespace CardGame
                 //
                 // get face and back images
                 //
-                card.CardFace = cardfaces[i].subtexture;
-                card.CardBack = cardBacks[currentCardBack].subtexture;
+                card.CardFace = cardfaces[i].Sprite;
+                card.CardBack = cardBacks[currentCardBack].Sprite;
 
                 card.Index = i;
                 card.IsFaceUp = true;
@@ -183,7 +183,7 @@ namespace CardGame
             for (int j = count; j > 1; j--)
             {
                 int temp = cardDeckPointer[j];
-                int Number = Nez.Random.nextInt(j + 1);
+                int Number = Nez.Random.NextInt(j + 1);
 
                 cardDeckPointer[j] = cardDeckPointer[Number];
                 cardDeckPointer[Number] = temp;
@@ -219,19 +219,19 @@ namespace CardGame
             CardComponent cc = GetCardComponent(cardnum);
             cc.IsFaceUp = _faceup;
 
-            Entity _card = scene.createEntity(cc.CName);
+            Entity _card = scene.CreateEntity(cc.CName);
             //
             // The card we deal has no colliders
             //
-            _card.enabled = false;
-            Sprite cface = new Sprite();
+            _card.Enabled = false;
+            SpriteRenderer cface = new SpriteRenderer();
 
-            cface.subtexture = cc.CardFace;
-            _card.addComponent(cface);
-            //_card.addComponent(new BoxCollider(new Rectangle(-36,-50,72,25)));      //collider is on Top of card only
-            //_card.addComponent(new BoxCollider(72f,100f));      //collider is on Top of card only
-            _card.addComponent(cc);
-            _card.tag = -1;                          //tag to identify this entity as a card
+            cface.Sprite = cc.CardFace;
+            _card.AddComponent(cface);
+            //_card.AddComponent(new BoxCollider(new Rectangle(-36,-50,72,25)));      //collider is on Top of card only
+            //_card.AddComponent(new BoxCollider(72f,100f));      //collider is on Top of card only
+            _card.AddComponent(cc);
+            _card.Tag = -1;                          //tag to identify this entity as a card
             return _card;
         }
         public static CardComponent GetCardComponent(int cardPTR)
@@ -242,26 +242,26 @@ namespace CardGame
             CardComponent cardObj = cardDeck[cardPTR];
             return cardObj;
         }
-        public static Sprite GetCardFace(int cardPTR)
+        public static SpriteRenderer GetCardFace(int cardPTR)
         {
             //
             // The face image of the card is returned
             //
-            Sprite cardObj = cardfaces[cardPTR];
+            SpriteRenderer cardObj = cardfaces[cardPTR];
             return cardObj;
         }
-        public static Sprite GetCardBack()
+        public static SpriteRenderer GetCardBack()
         {
             //
             // The back image of the card is returned
             //
-            Sprite cardObj = cardBacks[currentCardBack];
+            SpriteRenderer cardObj = cardBacks[currentCardBack];
             return cardObj;
         }
         //public static Sprite CardBack()
         //{
         //    Sprite st = GetCardBack();
-        //    //Sprite cback = new Sprite(st);
+        //    //Sprite cback = new SpriteRenderer(st);
         //    return st;
         //}
     }

@@ -69,12 +69,12 @@ namespace CardGame.Components
             Entity card = GetCard(_cardSeq);
             if (card == null)
                 return 0;
-            CardComponent ccomp = card.getComponent<CardComponent>();
+            CardComponent ccomp = card.GetComponent<CardComponent>();
             return ccomp.FaceImage;
         }
-        public override void onAddedToEntity()
+        public override void OnAddedToEntity()
         {
-            base.onAddedToEntity();
+            base.OnAddedToEntity();
         }
     }
 }

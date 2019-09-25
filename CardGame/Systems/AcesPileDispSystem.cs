@@ -22,12 +22,12 @@ namespace CardGame.Systems
         public AcesPileDispSystem(Matcher matcher) : base(matcher)
         {
         }
-        public override void process(Entity entity)
+        public override void Process(Entity entity)
         {
             //
             // Aces STACK entities come here 
             //
-            StackComponent sc = entity.getComponent<StackComponent>();
+            StackComponent sc = entity.GetComponent<StackComponent>();
             if (sc.StackID == 12)
             {
                 string j = sc.CName;
@@ -42,18 +42,18 @@ namespace CardGame.Systems
             for (int i=0; i < sc.CardsInStack.Count; i++)
             {
                 Entity cardEntity = sc.CardsInStack[i];
-                cardEntity.enabled = true;
-                cardEntity.transform.position = entity.transform.position + fanOutDistannce * ind;
+                cardEntity.Enabled = true;
+                cardEntity.Transform.Position = entity.Transform.Position + fanOutDistannce * ind;
                 //
                 // Get the sprite faces 
                 //
-                var cardComp = cardEntity.getComponent<CardComponent>();          //cardcomponent has the data
-                var renderComp = cardEntity.getComponent<Sprite>();               //sprite renderer of the card
+                var cardComp = cardEntity.GetComponent<CardComponent>();          //cardcomponent has the data
+                var renderComp = cardEntity.GetComponent<SpriteRenderer>();               //sprite renderer of the card
                 //
                 // -1 is first to display and -9 is last layer to display
                 //
-                renderComp.renderLayer = ind * -1;
-                renderComp.subtexture = cardComp.CardFace;
+                renderComp.RenderLayer = ind * -1;
+                renderComp.Sprite = cardComp.CardFace;
 
                 ind += 1;
             }

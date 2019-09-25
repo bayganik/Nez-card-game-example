@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/DevApps/Nez/Nez-Samples/_CardGame/CardGame/Content/hand1.png</SourceFile>
+  <SourceFile>C:/DevApps/Nez/Nez-Samples/_CardGame/NEZ-card-game-example/CardGame/Content/hand1.png</SourceFile>
   <SourceTime>2019-04-12T12:35:24.6752882-04:00</SourceTime>
-  <DestFile>C:/DevApps/Nez/Nez-Samples/_CardGame/CardGame/Content/bin/DesktopGL/Content/hand1.xnb</DestFile>
-  <DestTime>2019-04-16T15:09:16.5564864-04:00</DestTime>
+  <DestFile>C:/DevApps/Nez/Nez-Samples/_CardGame/NEZ-card-game-example/CardGame/Content/bin/DesktopGL/Content/hand1.xnb</DestFile>
+  <DestTime>2019-05-20T10:16:37.2180748-04:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2018-12-08T11:35:54-05:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

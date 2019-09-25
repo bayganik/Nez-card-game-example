@@ -22,12 +22,12 @@ namespace CardGame.Systems
         public PlayPileDispSystem(Matcher matcher) : base(matcher)
         {
         }
-        public override void process(Entity entity)
+        public override void Process(Entity entity)
         {
             //
             // entity = PlayStack
             //
-            StackComponent sc = entity.getComponent<StackComponent>();
+            StackComponent sc = entity.GetComponent<StackComponent>();
             Entity lastCardonStack = sc.CardsInStack.LastOrDefault();
 
             switch (sc.FannedDirection)
@@ -57,27 +57,27 @@ namespace CardGame.Systems
             for (int i=0; i < sc.CardsInStack.Count; i++)
             {
                 Entity cardEntity = sc.CardsInStack[i];
-                cardEntity.enabled = true;
-                cardEntity.transform.position = entity.transform.position + fanOutDistannce * new Vector2(ind, ind);
+                cardEntity.Enabled = true;
+                cardEntity.Transform.Position = entity.Transform.Position + fanOutDistannce * new Vector2(ind, ind);
                 //
                 // Get the sprite (face/back)
                 //
-                var cardComp = cardEntity.getComponent<CardComponent>();          //cardcomponent has the data
-                var renderComp = cardEntity.getComponent<Sprite>();               //sprite renderer of the card
+                var cardComp = cardEntity.GetComponent<CardComponent>();          //cardcomponent has the data
+                var renderComp = cardEntity.GetComponent<SpriteRenderer>();               //sprite renderer of the card
                 //
                 // -1 is first to display and -9 is last layer to display
                 //
-                renderComp.renderLayer = ind * -1;
-                //if ((entity.tag < 8) && (i == sc.CardsInStack.Count - 1))
+                renderComp.RenderLayer = ind * -1;
+                //if ((entity.Tag < 8) && (i == sc.CardsInStack.Count - 1))
                 //    cardComp.IsFaceUp = true;
 
                 if (cardComp.IsFaceUp)
                 {
-                    renderComp.subtexture = cardComp.CardFace;
+                    renderComp.Sprite = cardComp.CardFace;
                 }
                 else
                 {
-                    renderComp.subtexture = cardComp.CardBack;
+                    renderComp.Sprite = cardComp.CardBack;
                 }
                 ind += 1;
             }

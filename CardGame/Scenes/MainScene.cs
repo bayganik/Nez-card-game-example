@@ -36,7 +36,7 @@ namespace CardGame.Scenes
          *      dragging while displaying cards
          *      dropping cards on new stack or returning them to their original stack
         */
-        Sprite<int> eachCard;
+        //Sprite<int> eachCard;
         SceneResolutionPolicy policy;
         int cardBackNum = 6;
         Vector2 drawStack = new Vector2(90, 100);
@@ -61,6 +61,7 @@ namespace CardGame.Scenes
         float colliderX = -36f;
         float colliderY = -50f;
         NezSpriteFont font;
+        public ImageButton PlayButton { get; set; }
         public TextButton ExitButton { get; set; }
         public TextButton NewButton { get; set; }
         public Label Msg { get; set; }
@@ -72,194 +73,198 @@ namespace CardGame.Scenes
         {
             policy = Scene.SceneResolutionPolicy.ExactFit;
         }
-        public override void initialize()
+        public override void Initialize()
         {
-            base.initialize();
-            font = new NezSpriteFont(content.Load<SpriteFont>("Arial"));
+            base.Initialize();
+            font = new NezSpriteFont(Content.Load<SpriteFont>("Arial"));
 
             //znznznznznznznznznznznznznznznznznznznznznznznznznznznznzn
             // put a Canvas entity on upper right hand side for UI
             //znznznznznznznznznznznznznznznznznznznznznznznznznznznznzn
-            Entity uiCanvas = createEntity("ui-canvas");
-            UIC = uiCanvas.addComponent(new UICanvas());
+            Entity uiCanvas = CreateEntity("ui-canvas");
+            UIC = uiCanvas.AddComponent(new UICanvas());
 
-            ExitButton = UIC.stage.addElement(new TextButton("End !", Skin.createDefaultSkin()));
-            ExitButton.setPosition(800f, 30f);
-            ExitButton.setSize(60f, 20f);
-            ExitButton.onClicked += ExitButton_onClicked;
+            ExitButton = UIC.Stage.AddElement(new TextButton("End !", Skin.CreateDefaultSkin()));
+            ExitButton.SetPosition(800f, 30f);
+            ExitButton.SetSize(60f, 20f);
+            ExitButton.OnClicked += ExitButton_OnClicked;
 
-            NewButton = UIC.stage.addElement(new TextButton("Play !", Skin.createDefaultSkin()));
-            NewButton.setPosition(800f, 60f);
-            NewButton.setSize(60f, 20f);
-            NewButton.onClicked += NewButton_onClicked;
+            NewButton = UIC.Stage.AddElement(new TextButton("Play !", Skin.CreateDefaultSkin()));
+            NewButton.SetPosition(800f, 60f);
+            NewButton.SetSize(60f, 20f);
+            NewButton.OnClicked += NewButton_OnClicked;
 
-            Msg = UIC.stage.addElement(new Label("Label Msg"));
-            Msg.setPosition(800f, 90f);
-            Msg.setSize(100f, 50f);
+            Msg = UIC.Stage.AddElement(new Label("Label Msg"));
+            Msg.SetPosition(800f, 90f);
+            Msg.SetSize(100f, 50f);
+
+            ImageButtonStyle stl = new ImageButtonStyle();
+            PlayButton = UIC.Stage.AddElement(new ImageButton(stl));
+            PlayButton.SetPosition(800f, 120);
 
             //znznznznznznznznznznznznznznznznznznznznznznznznznznznznzn
             // Text entity with component (Game name label)
             //znznznznznznznznznznznznznznznznznznznznznznznznznznznznzn
-            TextEntity = createEntity("txt");
-            TextEntity.transform.position = new Vector2(350, 20);
-            TextEntity.transform.scale = new Vector2(1, 1);
-            var txt = new Text(Graphics.instance.bitmapFont, "Card Play Game", new Vector2(0, 0), Color.White);
-            txt.setFont(font);
-            TextEntity.addComponent(txt);
+            TextEntity = CreateEntity("txt");
+            TextEntity.Transform.Position = new Vector2(350, 20);
+            TextEntity.Transform.Scale = new Vector2(1, 1);
+            var txt = new TextComponent(Graphics.Instance.BitmapFont, "Card Play Game", new Vector2(0, 0), Color.White);
+            txt.SetFont(font);
+            TextEntity.AddComponent(txt);
 
             //znznznznznznznznznznznznznznznznznznznznznznznznznznznznzn
             // Score Text entity 
             //znznznznznznznznznznznznznznznznznznznznznznznznznznznznzn
-            ScoreEntity = createEntity("score");
-            ScoreEntity.transform.position = new Vector2(10, 20);
-            ScoreEntity.transform.scale = new Vector2(1, 1);
-            txt = new Text(Graphics.instance.bitmapFont, "Score 0", new Vector2(0, 0), Color.White);
-            txt.setFont(font);
-            ScoreEntity.addComponent(txt);
-            ScoreEntity.addComponent(new EndGameComponent());               //end of game goes with score entity
+            ScoreEntity = CreateEntity("score");
+            ScoreEntity.Transform.Position = new Vector2(10, 20);
+            ScoreEntity.Transform.Scale = new Vector2(1, 1);
+            txt = new Nez.TextComponent(Graphics.Instance.BitmapFont, "Score 0", new Vector2(0, 0), Color.White);
+            txt.SetFont(font);
+            ScoreEntity.AddComponent(txt);
+            ScoreEntity.AddComponent(new EndGameComponent());               //end of game goes with score entity
             CardDeckManager.score = 0;
             CardDeckManager.endOfGame = false;  
             //
             // Create a deck of cards from image
             //
-            var texture = content.Load<Texture2D>("CardDeck_72x100");
+            var texture = Content.Load<Texture2D>("CardDeck_72x100");
             CardDeckManager.InitAllCards(texture);                      //pass the texture to manager
             CardDeckManager.CreateDeckOfCards(this);                    //pass the scene to manager
             
             //znznznznznznznznznznznznznznznznznznznznznznznznznznznznzn
             // mouse entity has image that is a hand
             //znznznznznznznznznznznznznznznznznznznznznznznznznznznznzn
-            var mouseEntity = createEntity("mouse");
-            var mouseSprite = mouseEntity.addComponent(new Sprite(content.Load<Texture2D>("hand1")));
-            mouseSprite.renderLayer = -99;
-            mouseEntity.transform.scale = new Vector2(.30f, .30f);
+            var mouseEntity = CreateEntity("mouse");
+            var mouseSprite = mouseEntity.AddComponent(new SpriteRenderer(Content.Load<Texture2D>("hand1")));
+            mouseSprite.RenderLayer = -99;
+            mouseEntity.Transform.Scale = new Vector2(.30f, .30f);
             
-            mouseEntity.transform.position = new Vector2(30, 30);
-            mouseEntity.addComponent(new BoxCollider());
-            mouseEntity.addComponent(new MouseComponent());
+            mouseEntity.Transform.Position = new Vector2(30, 30);
+            mouseEntity.AddComponent(new BoxCollider());
+            mouseEntity.AddComponent(new MouseComponent());
             
             //znznznznznznznznznznznznznznznznznznznznznznznznznznznznzn
             // Deal Deck (image to click on for next card)
             //znznznznznznznznznznznznznznznznznznznznznznznznznznznznzn
-            DealDeck = createEntity("DealerStack", drawStack);
-            DealDeck.tag = 90;
-            DealDeck.addComponent(new Sprite(content.Load<Texture2D>("EmptyHolder")));
-            DealDeck.addComponent(new BoxCollider());
-            DealDeck.addComponent(new StackComponent() { StackID = 0 });
-            DealDeck.addComponent(new PilePlayComponent());
+            DealDeck = CreateEntity("DealerStack", drawStack);
+            DealDeck.Tag = 90;
+            DealDeck.AddComponent(new SpriteRenderer(Content.Load<Texture2D>("EmptyHolder")));
+            DealDeck.AddComponent(new BoxCollider());
+            DealDeck.AddComponent(new StackComponent() { StackID = 0 });
+            DealDeck.AddComponent(new PilePlayComponent());
 
             //znznznznznznznznznznznznznznznznznznznznznzn
             // 4 Ace stacks to collect cards
             //znznznznznznznznznznznznznznznznznznznznznzn
-            var as1 = createEntity("AceStack1", aceStack1);
-            as1.tag = 80;               //special tag for Ace pile
-            as1.addComponent(new Sprite(content.Load<Texture2D>("EmptyHolder")));
-            as1.addComponent(new BoxCollider());
-            as1.addComponent(new StackComponent() { StackID = 1, InitDealCnt = 0, CName = "AceStack" });
-            as1.addComponent(new PileDisplayedComponent());
+            var as1 = CreateEntity("AceStack1", aceStack1);
+            as1.Tag = 80;               //special tag for Ace pile
+            as1.AddComponent(new SpriteRenderer(Content.Load<Texture2D>("EmptyHolder")));
+            as1.AddComponent(new BoxCollider());
+            as1.AddComponent(new StackComponent() { StackID = 1, InitDealCnt = 0, CName = "AceStack" });
+            as1.AddComponent(new PileDisplayedComponent());
             AceStacks.Add(as1);
 
-            var as2 = createEntity("AceStack2", aceStack1 + new Vector2(100, 0));
-            as2.tag = 80;               //special tag for Ace pile
-            as2.addComponent(new Sprite(content.Load<Texture2D>("EmptyHolder")));
-            as2.addComponent(new BoxCollider());
-            as2.addComponent(new StackComponent() { StackID = 2 });
-            as2.addComponent(new PileDisplayedComponent());
+            var as2 = CreateEntity("AceStack2", aceStack1 + new Vector2(100, 0));
+            as2.Tag = 80;               //special tag for Ace pile
+            as2.AddComponent(new SpriteRenderer(Content.Load<Texture2D>("EmptyHolder")));
+            as2.AddComponent(new BoxCollider());
+            as2.AddComponent(new StackComponent() { StackID = 2 });
+            as2.AddComponent(new PileDisplayedComponent());
             AceStacks.Add(as2);
 
-            var as3 = createEntity("AceStack3", aceStack1 + new Vector2(200, 0));
-            as3.tag = 80;               //special tag for Ace pile
-            as3.addComponent(new Sprite(content.Load<Texture2D>("EmptyHolder")));
-            as3.addComponent(new BoxCollider());
-            as3.addComponent(new StackComponent() { StackID = 3 });
-            as3.addComponent(new PileDisplayedComponent());
+            var as3 = CreateEntity("AceStack3", aceStack1 + new Vector2(200, 0));
+            as3.Tag = 80;               //special tag for Ace pile
+            as3.AddComponent(new SpriteRenderer(Content.Load<Texture2D>("EmptyHolder")));
+            as3.AddComponent(new BoxCollider());
+            as3.AddComponent(new StackComponent() { StackID = 3 });
+            as3.AddComponent(new PileDisplayedComponent());
             AceStacks.Add(as3);
 
-            var as4 = createEntity("AceStack4", aceStack1 + new Vector2(300, 0));
-            as4.tag = 80;               //special tag for Ace pile
-            as4.addComponent(new Sprite(content.Load<Texture2D>("EmptyHolder")));
-            as4.addComponent(new BoxCollider());
-            as4.addComponent(new StackComponent() { StackID = 4 });
-            as4.addComponent(new PileDisplayedComponent());
+            var as4 = CreateEntity("AceStack4", aceStack1 + new Vector2(300, 0));
+            as4.Tag = 80;               //special tag for Ace pile
+            as4.AddComponent(new SpriteRenderer(Content.Load<Texture2D>("EmptyHolder")));
+            as4.AddComponent(new BoxCollider());
+            as4.AddComponent(new StackComponent() { StackID = 4 });
+            as4.AddComponent(new PileDisplayedComponent());
             AceStacks.Add(as4);
             
             //znznznznznznznznznznznznznznznznznznznznznzn
             // 7 playing stacks
             //znznznznznznznznznznznznznznznznznznznznznzn
-            var pl1 = createEntity("PlayStack1", playStack1);
-            pl1.tag = 1;
-            pl1.addComponent(new Sprite(content.Load<Texture2D>("EmptyHolder")));
-            pl1.addComponent(new BoxCollider(colliderX, colliderY, colliderWidth, colliderHeight));
-            pl1.addComponent(new StackComponent() { StackID = 5, FannedDirection = 4 });
-            pl1.addComponent(new PilePlayComponent());
+            var pl1 = CreateEntity("PlayStack1", playStack1);
+            pl1.Tag = 1;
+            pl1.AddComponent(new SpriteRenderer(Content.Load<Texture2D>("EmptyHolder")));
+            pl1.AddComponent(new BoxCollider(colliderX, colliderY, colliderWidth, colliderHeight));
+            pl1.AddComponent(new StackComponent() { StackID = 5, FannedDirection = 4 });
+            pl1.AddComponent(new PilePlayComponent());
             PlayStacks.Add(pl1);
 
-            var pl2 = createEntity("PlayStack2", playStack1 + new Vector2(100, 0));
-            pl2.tag = 2;
-            pl2.addComponent(new Sprite(content.Load<Texture2D>("EmptyHolder")));
-            pl2.addComponent(new BoxCollider(colliderX, colliderY, colliderWidth, colliderHeight));
-            pl2.addComponent(new StackComponent() { StackID = 6, FannedDirection = 4 });
-            pl2.addComponent(new PilePlayComponent());
+            var pl2 = CreateEntity("PlayStack2", playStack1 + new Vector2(100, 0));
+            pl2.Tag = 2;
+            pl2.AddComponent(new SpriteRenderer(Content.Load<Texture2D>("EmptyHolder")));
+            pl2.AddComponent(new BoxCollider(colliderX, colliderY, colliderWidth, colliderHeight));
+            pl2.AddComponent(new StackComponent() { StackID = 6, FannedDirection = 4 });
+            pl2.AddComponent(new PilePlayComponent());
             PlayStacks.Add(pl2);
 
-            var pl3 = createEntity("PlayStack3", playStack1 + new Vector2(200, 0));
-            pl3.tag = 3;
-            pl3.addComponent(new Sprite(content.Load<Texture2D>("EmptyHolder")));
-            pl3.addComponent(new BoxCollider(colliderX, colliderY, colliderWidth, colliderHeight));
-            pl3.addComponent(new StackComponent() { StackID = 7, FannedDirection = 4 });
-            pl3.addComponent(new PilePlayComponent());
+            var pl3 = CreateEntity("PlayStack3", playStack1 + new Vector2(200, 0));
+            pl3.Tag = 3;
+            pl3.AddComponent(new SpriteRenderer(Content.Load<Texture2D>("EmptyHolder")));
+            pl3.AddComponent(new BoxCollider(colliderX, colliderY, colliderWidth, colliderHeight));
+            pl3.AddComponent(new StackComponent() { StackID = 7, FannedDirection = 4 });
+            pl3.AddComponent(new PilePlayComponent());
             PlayStacks.Add(pl3);
 
-            var pl4 = createEntity("PlayStack4", playStack1 + new Vector2(300, 0));
-            pl4.tag = 4;
-            pl4.addComponent(new Sprite(content.Load<Texture2D>("EmptyHolder")));
-            pl4.addComponent(new BoxCollider(colliderX, colliderY, colliderWidth, colliderHeight));
-            pl4.addComponent(new StackComponent() { StackID = 8, FannedDirection = 4 });
-            pl4.addComponent(new PilePlayComponent());
+            var pl4 = CreateEntity("PlayStack4", playStack1 + new Vector2(300, 0));
+            pl4.Tag = 4;
+            pl4.AddComponent(new SpriteRenderer(Content.Load<Texture2D>("EmptyHolder")));
+            pl4.AddComponent(new BoxCollider(colliderX, colliderY, colliderWidth, colliderHeight));
+            pl4.AddComponent(new StackComponent() { StackID = 8, FannedDirection = 4 });
+            pl4.AddComponent(new PilePlayComponent());
             PlayStacks.Add(pl4);
 
-            var pl5 = createEntity("PlayStack5", playStack1 + new Vector2(400, 0));
-            pl5.tag = 5;
-            pl5.addComponent(new Sprite(content.Load<Texture2D>("EmptyHolder")));
-            pl5.addComponent(new BoxCollider(colliderX, colliderY, colliderWidth, colliderHeight));
-            pl5.addComponent(new StackComponent() { StackID = 9, FannedDirection = 4 });
-            pl5.addComponent(new PilePlayComponent());
+            var pl5 = CreateEntity("PlayStack5", playStack1 + new Vector2(400, 0));
+            pl5.Tag = 5;
+            pl5.AddComponent(new SpriteRenderer(Content.Load<Texture2D>("EmptyHolder")));
+            pl5.AddComponent(new BoxCollider(colliderX, colliderY, colliderWidth, colliderHeight));
+            pl5.AddComponent(new StackComponent() { StackID = 9, FannedDirection = 4 });
+            pl5.AddComponent(new PilePlayComponent());
             PlayStacks.Add(pl5);
 
-            var pl6 = createEntity("PlayStack6", playStack1 + new Vector2(500, 0));
-            pl6.tag = 6;
-            pl6.addComponent(new Sprite(content.Load<Texture2D>("EmptyHolder")));
-            pl6.addComponent(new BoxCollider(colliderX, colliderY, colliderWidth, colliderHeight));
-            pl6.addComponent(new StackComponent() { StackID = 10, FannedDirection = 4 });
-            pl6.addComponent(new PilePlayComponent());
+            var pl6 = CreateEntity("PlayStack6", playStack1 + new Vector2(500, 0));
+            pl6.Tag = 6;
+            pl6.AddComponent(new SpriteRenderer(Content.Load<Texture2D>("EmptyHolder")));
+            pl6.AddComponent(new BoxCollider(colliderX, colliderY, colliderWidth, colliderHeight));
+            pl6.AddComponent(new StackComponent() { StackID = 10, FannedDirection = 4 });
+            pl6.AddComponent(new PilePlayComponent());
             PlayStacks.Add(pl6);
 
-            var pl7 = createEntity("PlayStack7", playStack1 + new Vector2(600, 0));
-            pl7.tag = 7;
-            pl7.addComponent(new Sprite(content.Load<Texture2D>("EmptyHolder")));
-            pl7.addComponent(new BoxCollider(colliderX, colliderY, colliderWidth, colliderHeight));
-            pl7.addComponent(new StackComponent() { StackID = 11, FannedDirection = 4 });
-            pl7.addComponent(new PilePlayComponent());
+            var pl7 = CreateEntity("PlayStack7", playStack1 + new Vector2(600, 0));
+            pl7.Tag = 7;
+            pl7.AddComponent(new SpriteRenderer(Content.Load<Texture2D>("EmptyHolder")));
+            pl7.AddComponent(new BoxCollider(colliderX, colliderY, colliderWidth, colliderHeight));
+            pl7.AddComponent(new StackComponent() { StackID = 11, FannedDirection = 4 });
+            pl7.AddComponent(new PilePlayComponent());
             PlayStacks.Add(pl7);
             
             //znznznznznznznznznznznznznznznznznznznznznzn
             // Draw stack (all cards are faceup)
             //znznznznznznznznznznznznznznznznznznznznznzn
-            DrawDisp = createEntity("DrawDisp", drawStack + new Vector2(100, 0));
-            DrawDisp.tag = 80;
-            DrawDisp.addComponent(new Sprite(content.Load<Texture2D>("EmptyHolder")));
-            DrawDisp.addComponent(new BoxCollider());
-            DrawDisp.addComponent(new StackComponent() { StackID = 0, CName = "DrawDisp", FannedDirection = 0 });
-            DrawDisp.addComponent(new PileDisplayedComponent());
+            DrawDisp = CreateEntity("DrawDisp", drawStack + new Vector2(100, 0));
+            DrawDisp.Tag = 80;
+            DrawDisp.AddComponent(new SpriteRenderer(Content.Load<Texture2D>("EmptyHolder")));
+            DrawDisp.AddComponent(new BoxCollider());
+            DrawDisp.AddComponent(new StackComponent() { StackID = 0, CName = "DrawDisp", FannedDirection = 0 });
+            DrawDisp.AddComponent(new PileDisplayedComponent());
             
             //znznznznznznznznznznznznznznznznznznznznznznznznznznznznzn
             // Drag stack (all cards are faceup and are being moved)
             //znznznznznznznznznznznznznznznznznznznznznznznznznznznznzn
-            DragDisp = createEntity("DragDisp", new Vector2(0, 0));
-            DragDisp.tag = 85;
+            DragDisp = CreateEntity("DragDisp", new Vector2(0, 0));
+            DragDisp.Tag = 85;
             
-            DragDisp.addComponent(new BoxCollider());
-            DragDisp.addComponent(new StackComponent() { StackID = 0, FannedDirection = 4 });
+            DragDisp.AddComponent(new BoxCollider());
+            DragDisp.AddComponent(new StackComponent() { StackID = 0, FannedDirection = 4 });
 
             Fill_All_Stacks();
 
@@ -267,34 +272,34 @@ namespace CardGame.Scenes
             // Systems to process our requests
             //znznznznznznznznznznznznznznznznznznznznznznznznznznznznznznznznznznznznznznznznznznznzn
             //
-            this.addEntityProcessor(new MouseClickSystem(new Matcher().all(typeof(MouseComponent))));
-            this.addEntityProcessor(new PlayPileDispSystem(new Matcher().all(typeof(PilePlayComponent))));
-            this.addEntityProcessor(new AcesPileDispSystem(new Matcher().all(typeof(PileDisplayedComponent))));
-            this.addEntityProcessor(new StackDragDispSystem(new Matcher().all(typeof(DragComponent))));
-            this.addEntityProcessor(new EndOfGameSystem(new Matcher().all(typeof(EndGameComponent))));
+            this.AddEntityProcessor(new MouseClickSystem(new Matcher().All(typeof(MouseComponent))));
+            this.AddEntityProcessor(new PlayPileDispSystem(new Matcher().All(typeof(PilePlayComponent))));
+            this.AddEntityProcessor(new AcesPileDispSystem(new Matcher().All(typeof(PileDisplayedComponent))));
+            this.AddEntityProcessor(new StackDragDispSystem(new Matcher().All(typeof(DragComponent))));
+            this.AddEntityProcessor(new EndOfGameSystem(new Matcher().All(typeof(EndGameComponent))));
 
         }
         public bool EndOfGameTest()
         {
             return false;
 
-            //StackComponent scDeal = DealDeck.getComponent<StackComponent>();
+            //StackComponent scDeal = DealDeck.GetComponent<StackComponent>();
             //for (int i = 0; i < scDeal.CardsInStack.Count; i++)
             //{
             //    Entity card1 = scDeal.GetCard(i);
             //    if (card1 == null)
             //        break;
-            //    var dragCard = card1.getComponent<CardComponent>();
+            //    var dragCard = card1.GetComponent<CardComponent>();
             //    //
             //    // test this card to put on PlayStack
             //    //
             //    for (int pi = 0; pi < PlayStacks.Count; pi++)
             //    {
-            //        StackComponent sc = PlayStacks[pi].getComponent<StackComponent>();
+            //        StackComponent sc = PlayStacks[pi].GetComponent<StackComponent>();
             //        Entity card2 = sc.GetLastCard();
             //        if (card2 == null)
             //            break;
-            //        var dropCard = card2.getComponent<CardComponent>();
+            //        var dropCard = card2.GetComponent<CardComponent>();
             //        if (TestCardsForPlayStack(dragCard, dropCard))
             //            return false;               //card can be played, not end of game
             //    }
@@ -304,69 +309,69 @@ namespace CardGame.Scenes
         }
         public void DispGameScore()
         {
-            var txt = ScoreEntity.getComponent<Text>();
-            txt.renderLayer = -100;
-            txt.setText("Score " + CardDeckManager.score.ToString());
+            var txt = ScoreEntity.GetComponent<TextComponent>();
+            txt.RenderLayer = -100;
+            txt.SetText("Score " + CardDeckManager.score.ToString());
 
         }
         public void DispGameOver()
         {
-            TextEntity.transform.position = new Vector2(350, 400);
-            var txt = TextEntity.getComponent<Text>();
-            txt.renderLayer = -100;
-            txt.setText("GAME IS OVER !");
-            txt.setColor(Color.Black);
+            TextEntity.Transform.Position = new Vector2(350, 400);
+            var txt = TextEntity.GetComponent<TextComponent>();
+            txt.RenderLayer = -100;
+            txt.SetText("GAME IS OVER !");
+            txt.SetColor(Color.Black);
         }
-        private void ExitButton_onClicked(Button button)
+        private void ExitButton_OnClicked(Button button)
         {
             //
             // Exit button is pressed
             //
-            TextEntity.transform.position = new Vector2(350, 400);
-            var txt = TextEntity.getComponent<Text>();
-            txt.renderLayer = -100;
-            txt.setText("GAME IS OVER !");
-            txt.setColor(Color.Black);
+            TextEntity.Transform.Position = new Vector2(350, 400);
+            var txt = TextEntity.GetComponent<TextComponent>();
+            txt.RenderLayer = -100;
+            txt.SetText("GAME IS OVER !");
+            txt.SetColor(Color.Black);
 
             CardDeckManager.endOfGame = true;
         }
-        private void NewButton_onClicked(Button button)
+        private void NewButton_OnClicked(Button button)
         {
             //CardDeckManager.CreateDeckOfCards(this);   //create a new deck and shuffle
             //Fill_All_Stacks();
             //
             // New button is pressed
             //
-            var msg = UIC.stage.getElements();
+            var msg = UIC.Stage.GetElements();
             foreach(Element el in msg)
             {
                 if ((el.GetType() == typeof(Label)))
                 {
                     var lbl = (Label)el;
-                    lbl.setText("New Button Pushed");
+                    lbl.SetText("New Button Pushed");
                 }
             }
             //
             // put back the main heading
             //
-            TextEntity.transform.position = new Vector2(350, 20);
-            var txt = TextEntity.getComponent<Text>();
-            txt.renderLayer = -100;
-            txt.setText("GAME is new again !");
-            txt.setColor(Color.Black);
+            TextEntity.Transform.Position = new Vector2(350, 20);
+            var txt = TextEntity.GetComponent<TextComponent>();
+            txt.RenderLayer = -100;
+            txt.SetText("GAME is new again !");
+            txt.SetColor(Color.Black);
 
             CardDeckManager.score = 0;
             CardDeckManager.endOfGame = false;
         }
         public void ReturnCardFromDrag2Stack()
         {
-            DragComponent scDragComp = DragDisp.getComponent<DragComponent>();
+            DragComponent scDragComp = DragDisp.GetComponent<DragComponent>();
             if (scDragComp == null)
                 return;
 
             Entity fromEntity = scDragComp.EntityOrig;
-            StackComponent scDrag = DragDisp.getComponent<StackComponent>();            //cards being dragged
-            StackComponent scFrom = fromEntity.getComponent<StackComponent>();            //cards to give back
+            StackComponent scDrag = DragDisp.GetComponent<StackComponent>();            //cards being dragged
+            StackComponent scFrom = fromEntity.GetComponent<StackComponent>();            //cards to give back
             for (int i=0; i < scDrag.CardsInStack.Count; i++)
             {
                 scFrom.CardsInStack.Add(scDrag.CardsInStack[i]);
@@ -376,26 +381,26 @@ namespace CardGame.Scenes
         }
         public void DropCardFromDrag2AceStat(Entity _playStack)
         {
-            StackComponent scDrag = DragDisp.getComponent<StackComponent>();            //cards being dragged
+            StackComponent scDrag = DragDisp.GetComponent<StackComponent>();            //cards being dragged
 
             if (scDrag.CardsInStack.Count != 1)
             {
                 ReturnCardFromDrag2Stack();
                 return;
             }
-            DragComponent scDragComp = DragDisp.getComponent<DragComponent>();
+            DragComponent scDragComp = DragDisp.GetComponent<DragComponent>();
             if (scDragComp.EntityOrig == _playStack)
             {
                 ReturnCardFromDrag2Stack();
                 return;
             }
 
-            StackComponent scPlay = _playStack.getComponent<StackComponent>();            //cards being dropped
+            StackComponent scPlay = _playStack.GetComponent<StackComponent>();            //cards being dropped
             //
             // first card of drag needs to match last card of drop
             //
             Entity firstCardonStack = scDrag.CardsInStack[0];               //get first card of drag
-            CardComponent firstCard = firstCardonStack.getComponent<CardComponent>();
+            CardComponent firstCard = firstCardonStack.GetComponent<CardComponent>();
             //
             // Make sure this stack is not empty
             //
@@ -421,7 +426,7 @@ namespace CardGame.Scenes
             // play stack is NOT empty, test cards
             //
             Entity lastCardonStack = scPlay.CardsInStack.LastOrDefault();               //get last card
-            CardComponent lastCard = lastCardonStack.getComponent<CardComponent>();
+            CardComponent lastCard = lastCardonStack.GetComponent<CardComponent>();
             if (TestCardsForAceStack(firstCard, lastCard))
             {
                 for (int i = 0; i < scDrag.CardsInStack.Count; i++)
@@ -438,15 +443,15 @@ namespace CardGame.Scenes
         }
         public void DropCardFromDrag2PlayStack(Entity _playStack)
         {
-            StackComponent scDrag = DragDisp.getComponent<StackComponent>();            //cards being dragged
-            StackComponent scPlay = _playStack.getComponent<StackComponent>();            //cards being dropped
+            StackComponent scDrag = DragDisp.GetComponent<StackComponent>();            //cards being dragged
+            StackComponent scPlay = _playStack.GetComponent<StackComponent>();            //cards being dropped
             if (scDrag.CardsInStack.Count == 0)
                 return;
             //
             // first card of drag needs to match last card of drop
             //
             Entity firstCardonStack = scDrag.CardsInStack[0];               //get first card
-            CardComponent firstCard = firstCardonStack.getComponent<CardComponent>();
+            CardComponent firstCard = firstCardonStack.GetComponent<CardComponent>();
             //
             // Make sure this stack is not empty
             //
@@ -469,7 +474,7 @@ namespace CardGame.Scenes
                 //
                 for (int i = 0; i < scPlay.CardsInStack.Count; i++)
                 {
-                    CardComponent _cc = scPlay.CardsInStack[i].getComponent<CardComponent>();
+                    CardComponent _cc = scPlay.CardsInStack[i].GetComponent<CardComponent>();
                     _cc.HoldingStack = scPlay;
                 }
                 DragStackClear();
@@ -479,7 +484,7 @@ namespace CardGame.Scenes
             // play stack is NOT empty, test cards
             //
             Entity lastCardonStack = scPlay.CardsInStack.LastOrDefault();               //get last card
-            CardComponent lastCard = lastCardonStack.getComponent<CardComponent>();
+            CardComponent lastCard = lastCardonStack.GetComponent<CardComponent>();
             if (TestCardsForPlayStack(firstCard, lastCard))
             {
                 for (int i = 0; i < scDrag.CardsInStack.Count; i++)
@@ -491,7 +496,7 @@ namespace CardGame.Scenes
                 //
                 for (int i = 0; i < scPlay.CardsInStack.Count; i++)
                 {
-                    CardComponent _cc = scPlay.CardsInStack[i].getComponent<CardComponent>();
+                    CardComponent _cc = scPlay.CardsInStack[i].GetComponent<CardComponent>();
                     _cc.HoldingStack = scPlay;
                 }
                 DragStackClear();
@@ -546,17 +551,17 @@ namespace CardGame.Scenes
             //
             // Get the top card from 1-7 play stacks (_entity is a card)
             //
-            CardComponent _cc = _entity.getComponent<CardComponent>();
+            CardComponent _cc = _entity.GetComponent<CardComponent>();
             if (_cc == null)
                 return;
 
             StackComponent scTemp = _cc.HoldingStack;
-            Entity fromEntity = scTemp.entity;
+            Entity fromEntity = scTemp.Entity;
             //
             // index of card we are dragging in Play Stack
             //
-            int cInd = scTemp.CardsInStack.FindIndex(x => x.id == _entity.id);
-            StackComponent scDrag = DragDisp.getComponent<StackComponent>();
+            int cInd = scTemp.CardsInStack.FindIndex(x => x.Id == _entity.Id);
+            StackComponent scDrag = DragDisp.GetComponent<StackComponent>();
             //
             // if cInd is less than zero, then something is wrong
             //
@@ -566,7 +571,7 @@ namespace CardGame.Scenes
             for (int i=cInd; i <= scTemp.CardsInStack.Count - 1; i++)
             {
                 Entity lastCard = scTemp.CardsInStack[i];
-                CardComponent cc = lastCard.getComponent<CardComponent>();
+                CardComponent cc = lastCard.GetComponent<CardComponent>();
                 //cc.IsFaceUp = true;
                 scDrag.CardsInStack.Add(lastCard);
             }
@@ -583,15 +588,15 @@ namespace CardGame.Scenes
             // add cards to DispDrag
             //
             DragComponent sdc = new DragComponent() { EntityOrig = fromEntity };
-            DragDisp.addComponent<DragComponent>(sdc);
+            DragDisp.AddComponent<DragComponent>(sdc);
         }
         public void DealCard2Drag(Entity _entity)
         {
             //
             // Get the top card from either Ace piles or DrawDisp and add to DragDisp stack
             //
-            StackComponent scDrag = DragDisp.getComponent<StackComponent>();
-            StackComponent scTemp = _entity.getComponent<StackComponent>();
+            StackComponent scDrag = DragDisp.GetComponent<StackComponent>();
+            StackComponent scTemp = _entity.GetComponent<StackComponent>();
             if (scTemp == null)
                 return;         //not a stack entity
             if (scTemp.CardsInStack.Count == 0)
@@ -600,18 +605,18 @@ namespace CardGame.Scenes
             Entity lastCardonStack = scTemp.CardsInStack.LastOrDefault();               //get last card
             scTemp.CardsInStack.Remove(lastCardonStack);
 
-            CardComponent lastCard = lastCardonStack.getComponent<CardComponent>();
+            CardComponent lastCard = lastCardonStack.GetComponent<CardComponent>();
             lastCard.IsFaceUp = true;
 
 
             scDrag.CardsInStack.Add(lastCardonStack);
             DragComponent sdc = new DragComponent() { EntityOrig = _entity };
-            DragDisp.addComponent<DragComponent>(sdc);
+            DragDisp.AddComponent<DragComponent>(sdc);
         }
         public void DragStackClear()
         {
-            DragDisp.removeComponent<DragComponent>();
-            StackComponent sc = DragDisp.getComponent<StackComponent>();
+            DragDisp.RemoveComponent<DragComponent>();
+            StackComponent sc = DragDisp.GetComponent<StackComponent>();
             sc.CardsInStack.Clear();
         }
         public void DealCard2Disp(Entity _entity)
@@ -619,8 +624,8 @@ namespace CardGame.Scenes
             //
             // take last card from the deal deck
             //
-            StackComponent scDisp = DrawDisp.getComponent<StackComponent>();
-            StackComponent scTemp = DealDeck.getComponent<StackComponent>();
+            StackComponent scDisp = DrawDisp.GetComponent<StackComponent>();
+            StackComponent scTemp = DealDeck.GetComponent<StackComponent>();
             if (scTemp == null)
                 return;         //not a stack entity
             //
@@ -630,7 +635,7 @@ namespace CardGame.Scenes
             {
                 for (int i = scDisp.CardsInStack.Count - 1; i >= 0; i--)
                 {
-                    CardComponent _card = scDisp.CardsInStack[i].getComponent<CardComponent>();
+                    CardComponent _card = scDisp.CardsInStack[i].GetComponent<CardComponent>();
                     _card.IsFaceUp = false;
                     scTemp.CardsInStack.Add(scDisp.CardsInStack[i]);
                 }
@@ -641,7 +646,7 @@ namespace CardGame.Scenes
             Entity lastCardonStack = scTemp.CardsInStack.LastOrDefault();               //get last card
             scTemp.CardsInStack.Remove(lastCardonStack);
 
-            CardComponent lastCard = lastCardonStack.getComponent<CardComponent>();
+            CardComponent lastCard = lastCardonStack.GetComponent<CardComponent>();
             lastCard.IsFaceUp = true;
 
 
@@ -654,14 +659,14 @@ namespace CardGame.Scenes
             // entity = PlayStack
             //
             StackOfCards Cards = new StackOfCards(_playStack);
-            Vector2 startPos = _playStack.transform.position;
+            Vector2 startPos = _playStack.Transform.Position;
             int imax = Cards.CardsInStack.Count - 1;
             int ind = imax;
 
             for (int i = imax; i >= 0; i--)
             {
                 Entity cardEntity = Cards.CardsInStack[i];
-                CardComponent cc = cardEntity.getComponent<CardComponent>();
+                CardComponent cc = cardEntity.GetComponent<CardComponent>();
                 if (cc.IsFaceUp)
                 {
                     //
@@ -694,7 +699,7 @@ namespace CardGame.Scenes
         public void Fill_All_Stacks()
         {
             CardDeckManager.Shuffle();
-            StackComponent scDisp = DrawDisp.getComponent<StackComponent>();
+            StackComponent scDisp = DrawDisp.GetComponent<StackComponent>();
             scDisp.CardsInStack.Clear();
             //
             // Play Stack 0 gets 1 card
@@ -703,7 +708,7 @@ namespace CardGame.Scenes
             //
             for (int i = 0; i < PlayStacks.Count; i++)
             {
-                StackComponent sc = PlayStacks[i].getComponent<StackComponent>();
+                StackComponent sc = PlayStacks[i].GetComponent<StackComponent>();
                 sc.CardsInStack.Clear();
                 for (int j = 0; i >= j; j++)
                 {
@@ -711,7 +716,7 @@ namespace CardGame.Scenes
                     // Create a card Enitty
                     //
                     var card = CardDeckManager.DealACard(false);
-                    var ccomp = card.getComponent<CardComponent>();
+                    var ccomp = card.GetComponent<CardComponent>();
                     ccomp.CardStack = sc.StackID;
                     ccomp.HoldingStack = sc;
                     sc.CardsInStack.Add(card);
@@ -719,23 +724,23 @@ namespace CardGame.Scenes
                 //
                 // Find last card in this stack and flip it face up
                 //
-                StackComponent scTemp = PlayStacks[i].getComponent<StackComponent>();
+                StackComponent scTemp = PlayStacks[i].GetComponent<StackComponent>();
                 Entity lastCardonStack = scTemp.CardsInStack.LastOrDefault();               //get last card
-                var ccompTemp = lastCardonStack.getComponent<CardComponent>();              //turn it face up
+                var ccompTemp = lastCardonStack.GetComponent<CardComponent>();              //turn it face up
                 ccompTemp.IsFaceUp = true;
 
             }
             //
             // Dealer Stack gets rest of cards (24 of them)
             //
-            StackComponent scDeal = DealDeck.getComponent<StackComponent>();
+            StackComponent scDeal = DealDeck.GetComponent<StackComponent>();
             scDeal.CardsInStack.Clear();
             for (int i = 0; i < 52 ; i++)
             {
                 var card = CardDeckManager.DealACard(false);
                 if (card == null)
                     break;
-                var ccomp = card.getComponent<CardComponent>();
+                var ccomp = card.GetComponent<CardComponent>();
                 ccomp.CardStack = scDeal.StackID;
                 ccomp.HoldingStack = scDeal;
                 scDeal.CardsInStack.Add(card);

@@ -2,7 +2,7 @@
 using Nez.Sprites;
 using Nez.UI;
 using CardGame.Scenes;
-using Nez.ImGuiTools;
+
 
 namespace CardGame
 {
@@ -23,16 +23,16 @@ namespace CardGame
             //System.Diagnostics.Debug.Listeners.Add(new System.Diagnostics.TextWriterTraceListener(System.Console.Out));
 
             IsMouseVisible = false;
-            debugRenderEnabled = true;
+            DebugRenderEnabled = true;
             Window.AllowUserResizing = true;
-            debugRenderEnabled = false;
+            DebugRenderEnabled = false;
             //
             //
             //
             //var imGuiManager = new ImGuiManager();
             //Core.registerGlobalManager(imGuiManager);
 
-            scene = new Scenes.MainScene();
+            Scene = new Scenes.MainScene();
         }
 
 
