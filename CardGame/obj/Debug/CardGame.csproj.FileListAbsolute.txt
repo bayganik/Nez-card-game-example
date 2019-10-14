@@ -88,17 +88,4 @@ C:\DevApps\Nez\Nez-Samples\_CardGame\NEZ-card-game-example\CardGame\obj\Debug\Ca
 C:\DevApps\Nez\Nez-Samples\_CardGame\NEZ-card-game-example\CardGame\obj\Debug\CardGame.csproj.CopyComplete
 C:\DevApps\Nez\Nez-Samples\_CardGame\NEZ-card-game-example\CardGame\obj\Debug\CardGame.exe
 C:\DevApps\Nez\Nez-Samples\_CardGame\NEZ-card-game-example\CardGame\obj\Debug\CardGame.pdb
-C:\DevApps\Nez\Nez-Samples\_CardGame\NEZ-card-game-example\CardGame\bin\DesktopGL\AnyCPU\Debug\System.Data.Common.dll
-C:\DevApps\Nez\Nez-Samples\_CardGame\NEZ-card-game-example\CardGame\bin\DesktopGL\AnyCPU\Debug\System.Diagnostics.StackTrace.dll
-C:\DevApps\Nez\Nez-Samples\_CardGame\NEZ-card-game-example\CardGame\bin\DesktopGL\AnyCPU\Debug\System.Diagnostics.Tracing.dll
-C:\DevApps\Nez\Nez-Samples\_CardGame\NEZ-card-game-example\CardGame\bin\DesktopGL\AnyCPU\Debug\System.Globalization.Extensions.dll
-C:\DevApps\Nez\Nez-Samples\_CardGame\NEZ-card-game-example\CardGame\bin\DesktopGL\AnyCPU\Debug\System.IO.Compression.dll
-C:\DevApps\Nez\Nez-Samples\_CardGame\NEZ-card-game-example\CardGame\bin\DesktopGL\AnyCPU\Debug\System.Net.Http.dll
-C:\DevApps\Nez\Nez-Samples\_CardGame\NEZ-card-game-example\CardGame\bin\DesktopGL\AnyCPU\Debug\System.Net.Sockets.dll
-C:\DevApps\Nez\Nez-Samples\_CardGame\NEZ-card-game-example\CardGame\bin\DesktopGL\AnyCPU\Debug\System.Runtime.Serialization.Primitives.dll
-C:\DevApps\Nez\Nez-Samples\_CardGame\NEZ-card-game-example\CardGame\bin\DesktopGL\AnyCPU\Debug\System.Security.Cryptography.Algorithms.dll
-C:\DevApps\Nez\Nez-Samples\_CardGame\NEZ-card-game-example\CardGame\bin\DesktopGL\AnyCPU\Debug\System.Security.SecureString.dll
-C:\DevApps\Nez\Nez-Samples\_CardGame\NEZ-card-game-example\CardGame\bin\DesktopGL\AnyCPU\Debug\System.Threading.Overlapped.dll
-C:\DevApps\Nez\Nez-Samples\_CardGame\NEZ-card-game-example\CardGame\bin\DesktopGL\AnyCPU\Debug\System.Xml.XPath.XDocument.dll
 C:\DevApps\Nez\Nez-Samples\_CardGame\NEZ-card-game-example\CardGame\bin\DesktopGL\AnyCPU\Debug\Nez.dll
-C:\DevApps\Nez\Nez-Samples\_CardGame\NEZ-card-game-example\CardGame\bin\DesktopGL\AnyCPU\Debug\System.Drawing.Common.dll
